@@ -8,6 +8,7 @@ const catigoriesRouter = require("./router/catigories_router");
 app.use("/api/v1", aflamRouter);
 app.use("/api/v1", catigoriesRouter);
 
+
 app.get("/", (req, res) => {
   res.send("Hello world in aflam api");
 });

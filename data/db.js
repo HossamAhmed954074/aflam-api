@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 mongoose
-  .connect(
-    "mongodb+srv://emarketsorg_db_user:mYFiMgKGVlcZI4Im@egypt-e-markets.vfvnocv.mongodb.net/sample_mflix?appName=Egypt-E-markets"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected!"));
 
 module.exports = mongoose;
