@@ -3,9 +3,12 @@ const aflamModel = require("../models/aflam_module");
 const getCategories = async (req, res) => {
   try {
     const categories = await aflamModel.distinct("genres");
-    res.json(categories);
+    res.json({
+      status: "success",
+      categories: categories,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching categories data" });
+    res.status(500).json({ error: "Error fetching categories data" });
   }
 };
 
