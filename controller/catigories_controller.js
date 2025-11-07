@@ -1,14 +1,18 @@
 const aflamModel = require("../models/aflam_module");
+const httpStatusConstant = require("../utils/httpStatusConstant");
 
 const getCategories = async (req, res) => {
   try {
     const categories = await aflamModel.distinct("genres");
     res.json({
-      status: "success",
-      categories: categories,
+      status: httpStatusConstant.SUCCESS,
+      data: { categories },
     });
   } catch (error) {
-    res.status(500).json({ error: "Error fetching categories data" });
+    res.status(500).json({
+      status: httpStatusConstant.error,
+      error: error.message,
+    });
   }
 };
 

@@ -1,11 +1,12 @@
 const express = require("express");
-var cors = require('cors')
+const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const port = process.env.PORT || 3000;
 const aflamRouter = require("./router/aflam_router");
 const catigoriesRouter = require("./router/catigories_router");
+const httpStatusConstant  = require("./utils/httpStatusConstant");
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +21,9 @@ app.get("/", (req, res) => {
 // fallback handler for unknown routes
 // use app.use with no path so we don't pass a string route into path-to-regexp
 app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
+  res.status(404).json({
+     status : httpStatusConstant.ERROR ,
+     error: "The Route not found" });
 });
 
 app.listen(port, () => {
