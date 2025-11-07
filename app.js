@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 const aflamRouter = require("./router/aflam_router");
 const catigoriesRouter = require("./router/catigories_router");
 const httpStatusConstant = require("./utils/httpStatusConstant");
-const e = require("express");
+const userRouter = require("./router/user_router");
 
 app.use(rateLimit);
 app.use(helmet());
@@ -24,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", aflamRouter);
 app.use("/api/v1", catigoriesRouter);
+app.use("/api/v1", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world in aflam api");
