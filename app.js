@@ -1,14 +1,21 @@
 const express = require("express");
+// enable CORS -> Cross-Origin Resource Sharing
 const cors = require("cors");
+// security middleware
 const helmet = require("helmet");
+// rate limiter middleware
 const rateLimit = require("./middleware/limeterMiddleware");
+// create express app
 const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
+// load environment variables from .env file
+require("dotenv").config();
+
+// set port
 const port = process.env.PORT || 3000;
 const aflamRouter = require("./router/aflam_router");
 const catigoriesRouter = require("./router/catigories_router");
 const httpStatusConstant = require("./utils/httpStatusConstant");
+const e = require("express");
 
 app.use(rateLimit);
 app.use(helmet());
@@ -27,10 +34,19 @@ app.get("/", (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     status: httpStatusConstant.ERROR,
-    error: "The Route not found",
+    message: "The Route not found",
   });
 });
 
+// global error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    status: err.statusText || httpStatusConstant.ERROR,
+    message: err.message || "Internal Server Error",
+  });
+});
+
+// start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
