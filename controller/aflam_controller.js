@@ -43,7 +43,7 @@ const getAflamByCatigory = async (req, res) => {
     const aflam = await aflamModel
       .find({ genres: category })
       .limit(limit)
-      .skip(page * limit);
+      .skip((page - 1) * limit);
     res.status(200).json({
       status: httpStatusConstant.SUCCESS,
       limit: parseInt(limit),
