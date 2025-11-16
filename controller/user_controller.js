@@ -71,13 +71,7 @@ const loginUser = asyncWrapper(async (req, res, next) => {
     );
   }
 
-  const token = jwt.sign(
-    { id: user._id, email: user.email, name: user.name },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-  );
+  const token = user.genAuthToken();
   res.status(200).json({
     status: httpStatusConstant.SUCCESS,
     message: "User logged in successfully",
